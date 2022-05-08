@@ -26,8 +26,7 @@
 
         internal IEnumerable<FlightModel> GetAirplanesInAir()
         {
-            // TODO 2.5: Doplňte metodu repozitáře, která vrátí letadla ve vzduchu v listě modelů
-            return new FlightModel[] { };
+            return flightRepository.GetAirPlanesInAir();
         }
 
         internal byte[] GetExportToCsv()

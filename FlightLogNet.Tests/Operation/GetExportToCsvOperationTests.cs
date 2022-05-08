@@ -1,7 +1,8 @@
 namespace FlightLogNet.Tests.Operation
 {
     using System;
-    using System.Text;
+    using System.IO;
+    using System.Linq;
 
     using FlightLogNet.Operation;
 
@@ -20,8 +21,7 @@ namespace FlightLogNet.Tests.Operation
             this.configuration = configuration;
         }
 
-        // TODO 6.1: Odstraòtì skip a doplntì test, aby otestoval vrácený CSV soubor.
-        [Fact(Skip = "Not implemented.")]
+        [Fact]
         public void Execute_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
@@ -33,8 +33,11 @@ namespace FlightLogNet.Tests.Operation
             // Act
             var result = getExportToCsvOperation.Execute();
 
+            var res = System.Text.Encoding.UTF8.GetString(result);
+            byte[] expectedCsv = File.ReadAllBytes("../../../export.csv");
+
             // Assert
-            //Assert.Equal(expectedCsv, result);
+            Assert.Equal(expectedCsv, result);
         }
     }
 }
