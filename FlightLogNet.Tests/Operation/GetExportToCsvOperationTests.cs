@@ -21,7 +21,6 @@ namespace FlightLogNet.Tests.Operation
             this.configuration = configuration;
         }
 
-        // TODO 6.1: Odstraòtì skip a doplntì test, aby otestoval vrácený CSV soubor.
         [Fact]
         public void Execute_StateUnderTest_ExpectedBehavior()
         {
@@ -36,6 +35,7 @@ namespace FlightLogNet.Tests.Operation
 
             byte[] expectedCsv = ExpectedResult.export;
             expectedCsv = expectedCsv.Skip(3).ToArray();
+
             // Assert
             Assert.Equal(expectedCsv, result);
         }

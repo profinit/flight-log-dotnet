@@ -14,10 +14,6 @@
     [Route("[controller]")]
     public class AirplaneController : ControllerBase
     {
-        // TODO 3.1: Vystavte REST HTTPGet metodu vracející seznam klubových letadel
-        // Letadla získáte voláním airplaneFacade
-        // dotazované URL je /airplane
-        // Odpověď by měla být kolekce AirplaneModel
         private readonly ILogger<AirplaneController> logger;
         private readonly AirplaneFacade airplaneFacade;
 

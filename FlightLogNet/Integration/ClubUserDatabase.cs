@@ -13,7 +13,6 @@
 
     public class ClubUserDatabase : IClubUserDatabase
     {
-        // TODO 8.1: Přidejte si přes dependency injection configuraci 
         private readonly IConfiguration configuration;
         private readonly IMapper mapper;
 
@@ -38,7 +37,6 @@
 
         private IList<ClubUser> ReceiveClubUsers()
         {
-            // TODO 8.2: Naimplementujte volání endpointu ClubDB pomocí RestSharp
             var client = new RestClient(configuration["ClubUsersApi"]);
             var request = new RestRequest("club/user", DataFormat.Json);
 

@@ -10,6 +10,7 @@
     public class GetExportToCsvOperation
     {
         private readonly IFlightRepository flightRepository;
+        private const string DATE_FORMAT = "dd.MM.yyyy HH:mm:ss";
 
         public GetExportToCsvOperation(IFlightRepository flightRepository)
         {
@@ -18,19 +19,7 @@
 
         public byte[] Execute()
         {
-            // TODO 5.1: Naimplementujte export do CSV
-            // TIP: CSV soubor je pouze string, který se dá vytvořit pomocí třídy StringBuilder
-            // TIP: Do bytové reprezentace je možné jej převést například pomocí metody: Encoding.UTF8.GetBytes(..)
-//            string csv =
-//@"FlightId,TakeoffTime,LandingTime,Immatriculation,Type,Pilot,Copilot,Task,TowplaneID,GliderID
-//444,07.01.2020 16:47:10,07.01.2020 17:17:10,OK-B123,L-13A Blaník,Lenka Kiasová, ,Tahac,444,
-//1,02.01.2020 16:47:10,,OK-V23424,Zlín Z-42M,Lenka Kiasová, ,VLEK,4,1
-//4,02.01.2020 16:47:10,,OK-B123,L-13A Blaník,Silvie Hronová, ,Tahac,4,1
-//24057,02.01.2020 15:17:10,,OK-V23424,Zlín Z-42M,Petr Hrubec, ,VLEK,24058,24057
-//24058,02.01.2020 15:17:10,,OK-B123,L-13A Blaník,Silvie Hronová, ,Tahac,24058,24057
-//";
-
-//            return Encoding.UTF8.GetBytes(csv);
+            //before your loop
             var csv = new StringBuilder();
 
             // var reports = this.flightRepository.GetReport();
@@ -38,17 +27,33 @@
             csv.AppendLine(
                 "FlightId,TakeoffTime,LandingTime,Immatriculation,Type,Pilot,Copilot,Task,TowplaneID,GliderID");
 
-            foreach (var report in this.flightRepository.GetAllFlights(null))
+            foreach (var report in this.flightRepository.GetReport())
             {
-                csv.AppendLine(
-                    $"{report.Id},{report.TakeoffTime},{report.LandingTime},{report.Airplane.Immatriculation},{report.Airplane.Type},{report.Pilot},{report.Copilot},{report.Task}");
-            }
-            // var newLine = $"{0},{1}";
+                if (report.Towplane != null)
+                {
+                    // Towplane
+                    csv.Append($"{report.Towplane.Id},{report.Towplane.TakeoffTime.ToString(DATE_FORMAT)},{report.Towplane.LandingTime?.ToString(DATE_FORMAT)},");
+                    csv.Append($"{report.Towplane.Airplane?.Immatriculation},{report.Towplane.Airplane?.Type},");
+                    csv.Append($"{report.Towplane.Pilot?.FirstName} {report.Towplane.Pilot?.LastName},");
+                    csv.Append($"{report.Towplane.Copilot?.FirstName} {report.Towplane.Copilot?.LastName},");
+                    csv.Append($"{report.Towplane.Task},{report.Towplane?.Id},{report.Glider?.Id}");
+                    csv.AppendLine();
+                }
 
-            // File.WriteAllText(filePath, csv.ToString());
+                if (report.Glider != null)
+                {
+                    // Glider
+                    csv.Append($"{report.Glider.Id},{report.Glider.TakeoffTime.ToString(DATE_FORMAT)},{report.Glider.LandingTime?.ToString(DATE_FORMAT)},");
+                    csv.Append($"{report.Glider.Airplane?.Immatriculation},{report.Glider.Airplane?.Type},");
+                    csv.Append($"{report.Glider.Pilot?.FirstName} {report.Glider.Pilot?.LastName},");
+                    csv.Append($"{report.Glider.Copilot?.FirstName} {report.Glider.Copilot?.LastName},");
+                    csv.Append($"{report.Glider.Task},{report.Towplane?.Id},{report.Glider?.Id}");
+                    csv.AppendLine();
+                }
+            }
+            
             return Encoding.UTF8
                 .GetBytes(csv.ToString());
-
         }
     }
 }
