@@ -4,7 +4,7 @@
 
     public class FlightTakeOffModel
     {
-        public DateTime TakeoffTime { get; set; }
+        public required DateTime TakeoffTime { get; set; }
 
         public string Task { get; set; }
 

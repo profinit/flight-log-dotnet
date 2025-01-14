@@ -18,7 +18,7 @@ namespace FlightLogNet.Tests.Operation
 
         public CreatePersonOperationTests()
         {
-            this.mockRepository = new MockRepository(MockBehavior.Strict);
+            this.mockRepository = new(MockBehavior.Strict);
 
             this.mockPersonRepository = this.mockRepository.Create<IPersonRepository>();
             this.mockClubUserDatabase = this.mockRepository.Create<IClubUserDatabase>();
@@ -26,7 +26,7 @@ namespace FlightLogNet.Tests.Operation
 
         private CreatePersonOperation CreateCreatePersonOperation()
         {
-            return new CreatePersonOperation(
+            return new(
                 this.mockPersonRepository.Object,
                 this.mockClubUserDatabase.Object);
         }
@@ -52,7 +52,8 @@ namespace FlightLogNet.Tests.Operation
             var createPersonOperation = this.CreateCreatePersonOperation();
             PersonModel personModel = new PersonModel
             {
-                Address = new AddressModel { City = "NY", PostalCode = "456", Street = "2nd Ev", Country = "USA" },
+                MemberId = 0,
+                Address = new() { City = "NY", PostalCode = "456", Street = "2nd Ev", Country = "USA" },
                 FirstName = "John",
                 LastName = "Smith"
             };
@@ -63,6 +64,28 @@ namespace FlightLogNet.Tests.Operation
 
             // Assert
             Assert.True(result > 0);
+            this.mockRepository.VerifyAll();
+        }
+
+        [Fact]
+        public void Execute_ShouldReturnExistingClubMember()
+        {
+            // Arrange
+            var createPersonOperation = this.CreateCreatePersonOperation();
+            PersonModel personModel = new PersonModel
+            {
+                FirstName = "Jan",
+                LastName = "Novák",
+                MemberId = 3
+            };
+            long id = 333;
+            this.mockPersonRepository.Setup(repository => repository.TryGetPerson(personModel, out id)).Returns(true);
+
+            // Act
+            var result = createPersonOperation.Execute(personModel);
+
+            // Assert
+            Assert.Equal(id, result);
             this.mockRepository.VerifyAll();
         }
 

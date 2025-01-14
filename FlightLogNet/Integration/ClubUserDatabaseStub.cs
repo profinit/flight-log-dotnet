@@ -16,12 +16,12 @@
         private static List<ClubUser> ReceiveClubUsers()
         {
             return [
-                new() { MemberId = 1L, FirstName = "Kamila", LastName = "Spoustová", Roles = new[] { "PILOT" } },
-                new() { MemberId = 2L, FirstName = "Naděžda", LastName = "Pavelková", Roles = new[] { "PILOT" } },
-                new() { MemberId = 3L, FirstName = "Silvie", LastName = "Hronová", Roles = new[] { "PILOT" } },
-                new() { MemberId = 9L, FirstName = "Miloš", LastName = "Korbel", Roles = new[] { "PILOT", "BACKOFFICE" } },
-                new() { MemberId = 10L, FirstName = "Petr", LastName = "Hrubec", Roles = new[] { "PILOT", "BACKOFFICE" } },
-                new() { MemberId = 13L, FirstName = "Michal", LastName = "Vyvlečka", Roles = new[] { "BACKOFFICE" } }
+                new() { MemberId = 1L, FirstName = "Kamila", LastName = "Spoustová", Roles = ["PILOT"] },
+                new() { MemberId = 2L, FirstName = "Naděžda", LastName = "Pavelková", Roles = ["PILOT"] },
+                new() { MemberId = 3L, FirstName = "Silvie", LastName = "Hronová", Roles = ["PILOT"] },
+                new() { MemberId = 9L, FirstName = "Miloš", LastName = "Korbel", Roles = ["PILOT", "BACKOFFICE"] },
+                new() { MemberId = 10L, FirstName = "Petr", LastName = "Hrubec", Roles = ["PILOT", "BACKOFFICE"] },
+                new() { MemberId = 13L, FirstName = "Michal", LastName = "Vyvlečka", Roles = ["BACKOFFICE"] }
             ];
         }
 

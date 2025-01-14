@@ -42,7 +42,7 @@
             }
             catch (NotSupportedException ex)
             {
-                logger.LogError("Takeoff flight unable to proceed: {exception}", ex);
+                logger.LogError(ex, "Takeoff flight unable to proceed: {Exception}", ex);
                 return this.BadRequest();
             }
         }

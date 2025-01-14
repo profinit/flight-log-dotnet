@@ -2,10 +2,10 @@
 {
     public class AirplaneModel
     {
-        public long Id { get; set; }
+        public required long Id { get; set; }
 
-        public string Immatriculation { get; set; }
+        public required string Immatriculation { get; set; }
 
-        public string Type { get; set; }
+        public required string Type { get; set; }
     }
 }

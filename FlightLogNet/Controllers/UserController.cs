@@ -12,8 +12,7 @@
     [ApiController]
     [EnableCors]
     [Route("[controller]")]
-    public class UserController(ILogger<UserController> logger, PersonFacade personFacade) 
-        : ControllerBase
+    public class UserController(ILogger<UserController> logger, PersonFacade personFacade) : ControllerBase
     {
         [HttpGet]
         public IEnumerable<PersonModel> Get()

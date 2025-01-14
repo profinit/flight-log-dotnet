@@ -115,3 +115,6 @@ dotnet_style_qualification_for_property = true:suggestion
 
 # IDE0065: Misplaced using directive
 dotnet_diagnostic.IDE0065.severity = silent
+
+# IDE0079: Remove unnecessary suppression
+dotnet_diagnostic.IDE0079.severity = none

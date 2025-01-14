@@ -6,7 +6,7 @@
     using Models;
     using Repositories;
     using Repositories.Entities;
-    
+
     using Microsoft.Extensions.Configuration;
 
     internal static class TestDatabaseGenerator
@@ -49,7 +49,7 @@
                     Id = 112,
                     FirstName = "Lenka",
                     LastName = "Kiasová",
-                    Address = new Address { City = null, Country = null, PostalCode = null, Street = null }
+                    Address = new() { City = null, Country = null, PostalCode = null, Street = null }
                 });
 
             dbContext.Airplanes.AddRange(
@@ -104,8 +104,8 @@
                 new Flight
                 {
                     Id = 444,
-                    TakeoffTime = new DateTime(2020, 1, 7, 16, 47, 10),
-                    LandingTime = new DateTime(2020, 1, 7, 17, 17, 10),
+                    TakeoffTime = new(2020, 1, 7, 16, 47, 10, DateTimeKind.Local),
+                    LandingTime = new(2020, 1, 7, 17, 17, 10, DateTimeKind.Local),
                     Airplane = dbContext.Airplanes.Find(2L),
                     Pilot = dbContext.Persons.Find(112L),
                     Copilot = null,
@@ -141,13 +141,13 @@
                 {
                     Id = 2,
                     Immatriculation = "OK-B123",
-                    AirplaneType = new AirplaneType { Type = "L-13A Blaník" }
+                    AirplaneType = new() { Type = "L-13A Blaník" }
                 },
                 new ClubAirplane
                 {
                     Id = 1,
                     Immatriculation = "OK-V23424",
-                    AirplaneType = new AirplaneType { Type = "Zlín Z-42M" }
+                    AirplaneType = new() { Type = "Zlín Z-42M" }
                 });
 
             dbContext.SaveChanges();

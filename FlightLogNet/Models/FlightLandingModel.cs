@@ -4,8 +4,8 @@
 
     public class FlightLandingModel
     {
-        public long FlightId { get; set; }
+        public required long FlightId { get; set; }
 
-        public DateTime LandingTime { get; set; }
+        public required DateTime LandingTime { get; set; }
     }
 }

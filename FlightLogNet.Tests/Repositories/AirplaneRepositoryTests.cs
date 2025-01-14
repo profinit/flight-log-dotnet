@@ -13,7 +13,7 @@ namespace FlightLogNet.Tests.Repositories
     {
         private AirplaneRepository CreateAirplaneRepository()
         {
-            return new AirplaneRepository(mapper, configuration);
+            return new(mapper, configuration);
         }
 
         private void RenewDatabase()
@@ -22,7 +22,6 @@ namespace FlightLogNet.Tests.Repositories
         }
 
         [Fact]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("ReSharper", "StringLiteralTypo")]
         public void AddGuestAirplane_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
@@ -30,6 +29,7 @@ namespace FlightLogNet.Tests.Repositories
             var airplaneRepository = this.CreateAirplaneRepository();
             AirplaneModel airplaneModel = new AirplaneModel
             {
+                Id = 0,
                 Immatriculation = "OKA-424",
                 Type = "Zlín"
             };

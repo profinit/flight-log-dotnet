@@ -7,7 +7,6 @@ namespace FlightLogNet.Tests.Repositories
 
     using FlightLogNet.Models;
     using FlightLogNet.Repositories;
-    using FlightLogNet.Repositories.Interfaces;
 
     using Xunit;
 
@@ -15,9 +14,9 @@ namespace FlightLogNet.Tests.Repositories
 
     public class FlightRepositoryTests(IMapper mapper, IConfiguration configuration)
     {
-        private IFlightRepository CreateFlightRepository()
+        private FlightRepository CreateFlightRepository()
         {
-            return new FlightRepository(mapper, configuration);
+            return new(mapper, configuration);
         }
 
         private void RenewDatabase()

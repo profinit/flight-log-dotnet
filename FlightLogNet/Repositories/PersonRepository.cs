@@ -10,17 +10,17 @@
 
     public class PersonRepository(IConfiguration configuration) : IPersonRepository
     {
-        public long AddGuestPerson(PersonModel pilot)
+        public long AddGuestPerson(PersonModel person)
         {
             using var dbContext = new LocalDatabaseContext(configuration);
 
-            var address = new Address { City = pilot.Address.City, Country = pilot.Address.Country, PostalCode = pilot.Address.PostalCode, Street = pilot.Address.Street };
-            var person = new Person { Address = address, FirstName = pilot.FirstName, LastName = pilot.LastName, PersonType = PersonType.Guest };
+            var address = new Address { City = person.Address.City, Country = person.Address.Country, PostalCode = person.Address.PostalCode, Street = person.Address.Street };
+            var personEntity = new Person { Address = address, FirstName = person.FirstName, LastName = person.LastName, PersonType = PersonType.Guest };
 
-            dbContext.Persons.Add(person);
+            dbContext.Persons.Add(personEntity);
             dbContext.SaveChanges();
 
-            return person.Id;
+            return personEntity.Id;
         }
 
         public long CreateClubMember(PersonModel pilot)
