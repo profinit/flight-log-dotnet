@@ -7,7 +7,6 @@
         public static void ConfigureServices(IServiceCollection services)
         {
             InjectConfiguration.Initialization(services);
-            services.AddAutoMapper(typeof(AutoMapperProfile));
         }
     }
 }

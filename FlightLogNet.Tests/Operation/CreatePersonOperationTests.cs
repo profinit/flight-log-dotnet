@@ -1,4 +1,4 @@
-namespace FlightLogNet.Tests.Operation
+ï»¿namespace FlightLogNet.Tests.Operation
 {
     using Integration;
     using Models;
@@ -75,7 +75,7 @@ namespace FlightLogNet.Tests.Operation
             PersonModel personModel = new PersonModel
             {
                 FirstName = "Jan",
-                LastName = "Novák",
+                LastName = "NovÃ¡k",
                 MemberId = 3
             };
             long id = 333;
@@ -93,13 +93,32 @@ namespace FlightLogNet.Tests.Operation
         public void Execute_ShouldCreateNewClubMember()
         {
             // Arrange
+            var createPersonOperation = this.CreateCreatePersonOperation();
+            PersonModel personModel = new PersonModel
+            {
+                FirstName = "Karl",
+                LastName = "LucemnburskÃ½",
+                MemberId = 444
+            };
+            PersonModel clubUser = new PersonModel
+            {
+                FirstName = "Karel",
+                LastName = "LucemburskÃ½",
+                MemberId = 444
+            };
 
-            // TODO 7.1: Naimplementujte test s použitím mockù
+            // TODO 7.1: Naimplementujte test s pouÅ¾itÃ­m mockÅ¯
+            long id = 0;
+            this.mockPersonRepository.Setup(repository => repository.TryGetPerson(personModel, out id)).Returns(false);
+            this.mockClubUserDatabase.Setup(repository => repository.TryGetClubUser(444, out clubUser)).Returns(true);
+            this.mockPersonRepository.Setup(repository => repository.CreateClubMember(clubUser)).Returns(4);
 
             // Act
+            var result = createPersonOperation.Execute(personModel);
 
             // Assert
-
+            Assert.Equal(4, result);
+            this.mockRepository.VerifyAll();
         }
     }
 }

@@ -1,7 +1,5 @@
-namespace FlightLogNet.Tests.Repositories
+﻿namespace FlightLogNet.Tests.Repositories
 {
-    using AutoMapper;
-
     using Models;
     using FlightLogNet.Repositories;
 
@@ -9,11 +7,11 @@ namespace FlightLogNet.Tests.Repositories
 
     using Microsoft.Extensions.Configuration;
 
-    public class AirplaneRepositoryTests(IMapper mapper, IConfiguration configuration)
+    public class AirplaneRepositoryTests(IConfiguration configuration)
     {
         private AirplaneRepository CreateAirplaneRepository()
         {
-            return new(mapper, configuration);
+            return new(configuration);
         }
 
         private void RenewDatabase()
@@ -31,7 +29,7 @@ namespace FlightLogNet.Tests.Repositories
             {
                 Id = 0,
                 Immatriculation = "OKA-424",
-                Type = "Zl�n"
+                Type = "Zlín"
             };
 
             // Act

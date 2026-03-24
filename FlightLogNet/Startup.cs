@@ -1,7 +1,5 @@
 namespace FlightLogNet
 {
-    using AutoMapper;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
@@ -20,8 +18,6 @@ namespace FlightLogNet
         {
             InjectConfiguration.Initialization(services);
             services.AddControllers();
-            services.AddAutoMapper(typeof(AutoMapperProfile));
-            // services.AddAutoMapper(System.Reflection.Assembly.GetCallingAssembly());
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(
@@ -41,7 +37,7 @@ namespace FlightLogNet
 
         // ReSharper disable once UnusedMember.Global - used by Framework
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMapper mapper, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddLog4Net();
 
@@ -70,8 +66,6 @@ namespace FlightLogNet
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
-
-            mapper.ConfigurationProvider.AssertConfigurationIsValid();
         }
     }
 }

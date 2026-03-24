@@ -3,20 +3,18 @@ namespace FlightLogNet.Tests.Repositories
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
-    using FlightLogNet.Models;
+    using Models;
     using FlightLogNet.Repositories;
 
     using Xunit;
 
     using Microsoft.Extensions.Configuration;
 
-    public class FlightRepositoryTests(IMapper mapper, IConfiguration configuration)
+    public class FlightRepositoryTests(IConfiguration configuration)
     {
         private FlightRepository CreateFlightRepository()
         {
-            return new(mapper, configuration);
+            return new(configuration);
         }
 
         private void RenewDatabase()
@@ -32,8 +30,9 @@ namespace FlightLogNet.Tests.Repositories
             var flightRepository = this.CreateFlightRepository();
 
             // Act
-            // TODO 2.2: Upravte volanou metodu, aby v˝sledek vr·til pouze lety, kterÈ jsou kluz·ky.
+            // TODO 2.2: Upravte volanou metodu, aby v√Ωsledek vr√°til pouze lety, kter√© jsou kluz√°ky.
             var result = flightRepository.GetAllFlights();
+            //var result = flightRepository.GetFlightsOfType(FlightType.Glider);
 
             // Assert
             Assert.True(result.Count == 2, "In test database is 2 gliders.");
@@ -47,8 +46,9 @@ namespace FlightLogNet.Tests.Repositories
             var flightRepository = this.CreateFlightRepository();
 
             // Act
-            // TODO 2.4: DoplÚte metodu repozit·¯e a odstraÚte p¯eskoËenÌ testu (skip)
-            IList<FlightModel> result = null;
+            // TODO 2.4: Dopl≈àte metodu repozit√°≈ôe a odstra≈àte p≈ôeskoƒçen√≠ testu (skip)
+            var result = flightRepository.GetAllFlights();
+            //var result = flightRepository.GetAirplanesInAir();
 
             // Assert
             Assert.NotEmpty(result);

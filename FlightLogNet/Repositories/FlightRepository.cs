@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
     using Models;
     using Entities;
     using Interfaces;
@@ -13,16 +11,19 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
 
-    public class FlightRepository(IMapper mapper, IConfiguration configuration) : IFlightRepository
+    public class FlightRepository(IConfiguration configuration) : IFlightRepository
     {
         // TODO 2.1: Upravte metodu tak, aby vrátila pouze lety specifického typu
         public IList<FlightModel> GetAllFlights()
         {
             using var dbContext = new LocalDatabaseContext(configuration);
 
-            var flights = dbContext.Flights;
+            var flights = dbContext.Flights
+                .Include(flight => flight.Airplane).ThenInclude(airplane => airplane.ClubAirplane).ThenInclude(ca => ca.AirplaneType)
+                .Include(flight => flight.Pilot).ThenInclude(person => person.Address)
+                .Include(flight => flight.Copilot).ThenInclude(person => person.Address);
 
-            return mapper.ProjectTo<FlightModel>(flights).ToList();
+            return flights.Select(f => f.ToModel()).ToList();
         }
 
         // TODO 2.3: Vytvořte metodu, která načte letadla, která jsou ve vzduchu, seřadí je od nejstarších,
@@ -90,7 +91,7 @@
                 .Include(flight => flight.Towplane.Copilot)
                 .OrderByDescending(start => start.Towplane.TakeoffTime);
 
-            return mapper.ProjectTo<ReportModel>(flightStarts).ToList();
+            return flightStarts.Select(fs => fs.ToModel()).ToList();
         }
     }
 }

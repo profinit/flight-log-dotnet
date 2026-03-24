@@ -23,5 +23,16 @@
         public string Note { get; set; }
 
         public FlightType Type { get; set; }
+
+        public FlightModel ToModel() => new()
+        {
+            Id = Id,
+            TakeoffTime = TakeoffTime,
+            LandingTime = LandingTime,
+            Airplane = Airplane?.ToModel(),
+            Pilot = Pilot?.ToModel(),
+            Copilot = Copilot?.ToModel(),
+            Task = Task,
+        };
     }
 }

@@ -1,4 +1,4 @@
-namespace FlightLogNet.Tests.Operation
+ï»¿namespace FlightLogNet.Tests.Operation
 {
     using FlightLogNet.Operation;
 
@@ -6,11 +6,15 @@ namespace FlightLogNet.Tests.Operation
 
     public class GetExportToCsvOperationTests(GetExportToCsvOperation getExportToCsvOperation)
     {
-        // TODO 6.1: Odstraòtì skip a doplntì test, aby otestoval vrácený CSV soubor.
+        // TODO 6.1: OdstraÅˆte skip a doplÅˆte test, aby otestoval vrÃ¡cenÃ½ CSV soubor.
         [Fact(Skip = "Not implemented.")]
         public void Execute_StateUnderTest_ExpectedBehavior()
         {
             // Arrange
+            //TestDatabaseGenerator.DeleteOldDatabase(configuration);
+            //DateTime fixedDate = new DateTime(2020, 1, 2, 16, 57, 10, DateTimeKind.Local);
+            //TestDatabaseGenerator.CreateTestDatabaseWithFixedTime(fixedDate, configuration);
+            var expectedCsv = ExpectedResult.export;
 
             // Act
             var result = getExportToCsvOperation.Execute();

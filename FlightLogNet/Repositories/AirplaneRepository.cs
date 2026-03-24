@@ -3,8 +3,6 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
     using Models;
     using Entities;
     using Interfaces;
@@ -12,7 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
 
-    public class AirplaneRepository(IMapper mapper, IConfiguration configuration) : IAirplaneRepository
+    public class AirplaneRepository(IConfiguration configuration) : IAirplaneRepository
     {
         public long AddGuestAirplane(AirplaneModel airplaneModel)
         {
@@ -36,7 +34,7 @@
             var airplanes = dbContext.ClubAirplanes
                 .Include(airplane => airplane.AirplaneType);
 
-            return mapper.ProjectTo<AirplaneModel>(airplanes).ToList();
+            return airplanes.Select(a => a.ToModel()).ToList();
         }
 
         public bool TryGetAirplane(AirplaneModel airplaneModel, out long airplaneId)
