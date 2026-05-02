@@ -13,6 +13,9 @@
     {
         // TODO 8.1: Přidejte si / použijte přes dependency injection configuraci
 
+        private string baseUrl = configuration["ClubUsersApi"];
+
+
         public bool TryGetClubUser(long memberId, out PersonModel personModel)
         {
             personModel = this.GetClubUsers().FirstOrDefault(person => person.MemberId == memberId);
@@ -28,9 +31,10 @@
 
         private List<ClubUser> ReceiveClubUsers()
         {
-            // TODO 8.2: Naimplementujte volání endpointu ClubDB pomocí RestSharp
-
-            return null;
+            var client = new RestClient(baseUrl);
+            var request = new RestRequest("club/user");
+            var response = client.Get<List<ClubUser>>(request);
+            return response;
         }
 
         private List<PersonModel> TransformToPersonModel(IList<ClubUser> users)
