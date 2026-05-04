@@ -10,8 +10,9 @@
 
 namespace FlightLogNet.Tests {
     using System;
-    
-    
+    using System.IO;
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -65,8 +66,10 @@ namespace FlightLogNet.Tests {
         /// </summary>
         internal static byte[] export {
             get {
-                object obj = ResourceManager.GetObject("export", resourceCulture);
-                return ((byte[])(obj));
+                //object obj = ResourceManager.GetObject("export", resourceCulture);
+                string content = File.ReadAllText("..\\..\\..\\export.csv");
+                return System.Text.Encoding.UTF8.GetBytes(content);
+                //return ((byte[])(obj));
             }
         }
     }
