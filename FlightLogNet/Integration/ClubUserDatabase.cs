@@ -39,7 +39,9 @@
 
         private List<PersonModel> TransformToPersonModel(IList<ClubUser> users)
         {
-            return null;
+            return users
+                .Select(u => u.ToPersonModel())
+                .ToList();
         }
     }
 }
