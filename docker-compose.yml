@@ -1,0 +1,14 @@
+services:
+  flightlog:
+    build: .
+    ports:
+      - "8080:8080"
+      - "44313:44313"
+    volumes:
+      - flightlog-data:/data
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Production"
+      ClubUsersApi__Url: "http://vyuka.profinit.eu:8080/club/user"
+
+volumes:
+  flightlog-data:
