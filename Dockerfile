@@ -1,19 +1,20 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
+COPY FlightLogNet/FlightLogNet.csproj FlightLogNet/
+COPY FlightLogDotNet.sln .
+RUN dotnet restore FlightLogNet/FlightLogNet.csproj
+COPY FlightLogNet/ FlightLogNet/
+RUN dotnet publish FlightLogNet/FlightLogNet.csproj -c Release -o /app/publish /p:UseAppHost=false
 
-COPY . .
-RUN dotnet publish FlightLogNet/FlightLogNet.csproj -c Release -o /app/publish
-
+# === Runtime stage ===
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
-
-RUN mkdir /data
-
 COPY --from=build /app/publish ./
-
-EXPOSE 8080
+RUN mkdir -p /data && chown app:app /data
+USER app
+ENV ASPNETCORE_URLS=http://+:44313
+ENV SqliteConnectionString="Data Source=/data/flightlog.db"
+ENV ASPNETCORE_ENVIRONMENT=Production
 EXPOSE 44313
-
-ENV ConnectionStrings__DefaultConnection="Data Source=/data/flightlog.db"
-
+VOLUME ["/data"]
 ENTRYPOINT ["dotnet", "FlightLogNet.dll"]

@@ -2,7 +2,7 @@ services:
   flightlog:
     build: .
     ports:
-      - "8080:8080"
+      - "80:44313"
       - "44313:44313"
     volumes:
       - flightlog-data:/data
